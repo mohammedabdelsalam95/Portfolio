@@ -24,13 +24,13 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#f9fafb] to-white pt-[128px]">
-        <div className="mx-auto flex max-w-[1368px] items-start gap-[54px] px-16">
-          <div className="flex w-1/2 flex-col justify-center pt-[100px]">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#f9fafb] to-white pb-[36px] pt-[108px]">
+        <div className="mx-auto flex max-w-[1368px] items-center gap-[54px] px-16">
+          <div className="flex w-1/2 flex-col justify-center">
             <span className="inline-flex w-fit items-center rounded-full border border-[rgba(0,194,130,0.2)] bg-[rgba(0,194,130,0.05)] px-[18px] py-[5px] text-[15.75px] text-[#00c282]">
               Available for new projects
             </span>
-            <div className="mt-[70px] flex flex-col gap-[18px]">
+            <div className="mt-[36px] flex flex-col gap-[18px]">
               <h1 className="text-[67.5px] font-bold leading-[67.5px] tracking-[-1.69px] text-[#0a0a0a]">
                 Hi, I'm <span className="text-[#00c282]">Mohammed Helaly</span>
               </h1>
