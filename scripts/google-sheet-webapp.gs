@@ -1,59 +1,21 @@
 /**
- * ============================================================
- * PORTFOLIO LEADS → GOOGLE SHEET (Google Apps Script)
- * ============================================================
+ * PORTFOLIO LEADS → GOOGLE SHEET
  *
- * Your Vite app POSTs JSON (Content-Type: text/plain) with:
- *   _ts, form, name, email, phone, subject, message, extras
+ * CRITICAL SETTINGS (Deployments → pencil on active deployment):
+ *   - Execute as: Me
+ *   - Who has access: **Anyone**   ← must be “Anyone”, not “Only myself”
  *
- * ----------------------------------------------------------
- * SETUP (bind script to the spreadsheet — recommended)
- * ----------------------------------------------------------
- * 1. Google Drive → New → Google Sheets → Blank spreadsheet.
- * 2. (Optional) Rename first tab to: Leads
- *    The script uses sheet "Leads" if it exists; otherwise the first tab.
- * 3. In the spreadsheet menu: Extensions → Apps Script.
- * 4. Delete default Code.gs content; paste this entire file (all lines).
- * 5. Save project (disk icon). Name it e.g. "Portfolio Leads".
+ * CRITICAL: Open Apps Script FROM the spreadsheet:
+ *   Sheet menu → Extensions → Apps Script
+ *   (If this project was created only at script.google.com, set SPREADSHEET_ID below.)
  *
- * ----------------------------------------------------------
- * FIRST AUTHORIZATION
- * ----------------------------------------------------------
- * 6. Click Run ▶ , select doGet (or first save triggers no run).
- * 7. Deploy → New deployment → Select type: Web app
- *    - Execute as: Me (your@email.com)
- *    - Who has access: Anyone
- *      (Required so your public site / Lovable can POST without Google login.)
- * 8. Deploy → Authorize access → Google account → Continue →
- *    If you see “Google hasn’t verified this app”: Advanced → Go to … (unsafe) → Allow.
- * 9. Copy the Web app URL. It looks like:
- *      https://script.google.com/macros/s/AKfycb.../exec
- *    Put it in Lovable / .env as:
- *      VITE_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/.../exec
+ * After editing: Deploy → Manage deployments → edit → Version “New version” → Deploy
  *
- * ----------------------------------------------------------
- * AFTER YOU CHANGE THIS CODE
- * ----------------------------------------------------------
- * Deploy → Manage deployments → pencil (edit) on Active
- *   → Version: New version → Deploy
- * (Old URLs keep working; they just need a new version to pick up code changes.)
- *
- * ----------------------------------------------------------
- * TEST
- * ----------------------------------------------------------
- * Paste Web app URL in a browser tab → you should see JSON:
- *   {"ok":true,"message":"Portfolio leads endpoint is running..."}
- * Submit your Contact / Start a project form → a new row should appear.
- *
- * ----------------------------------------------------------
- * STANDALONE SCRIPT (optional)
- * ----------------------------------------------------------
- * If you created the project at script.google.com (not from the Sheet),
- * set SPREADSHEET_ID below from your Sheet URL:
- *   https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit
+ * DEBUG: Apps Script → Executions — run the site form, refresh Executions to see errors.
  */
 
-// Common sheet ID: long string between /d/ and /edit
+// Only if script is NOT bound to a sheet: paste ID from
+// https://docs.google.com/spreadsheets/d/THIS_IS_THE_ID/edit
 var SPREADSHEET_ID = "";
 
 function getSpreadsheet_() {
@@ -63,7 +25,7 @@ function getSpreadsheet_() {
   }
   if (!ss) {
     throw new Error(
-      "Open the Sheet → Extensions → Apps Script (bind script). Or set SPREADSHEET_ID for standalone."
+      "No spreadsheet: open your Sheet → Extensions → Apps Script and paste code there, OR fill SPREADSHEET_ID in this script."
     );
   }
   return ss;
@@ -75,11 +37,8 @@ function getLeadsSheet_() {
   return byName || ss.getSheets()[0];
 }
 
-/** If the sheet is completely empty, add header row once. */
 function ensureHeaderRow_(sheet) {
-  if (sheet.getLastRow() !== 0) {
-    return;
-  }
+  if (sheet.getLastRow() !== 0) return;
   sheet.appendRow([
     "Timestamp",
     "Form",
@@ -93,29 +52,45 @@ function ensureHeaderRow_(sheet) {
 }
 
 /**
- * GET → quick health check (open /exec URL in browser).
+ * Parses lead JSON from the website.
+ * Supports:
+ *   - Form POST: payload=<urlencoded json>  (what the portfolio site sends)
+ *   - Raw JSON string in post body (legacy)
  */
+function parseLeadPayload_(e) {
+  if (e.parameter && e.parameter.payload) {
+    return JSON.parse(e.parameter.payload);
+  }
+  if (!e.postData || e.postData.contents == null || e.postData.contents === "") {
+    throw new Error(
+      "No payload — Web app must allow 'Anyone'. Redeploy if you changed the script."
+    );
+  }
+  var contents = String(e.postData.contents).trim();
+  if (contents.indexOf("{") === 0) {
+    return JSON.parse(contents);
+  }
+  if (contents.indexOf("payload=") !== -1) {
+    var match = contents.match(/(?:^|&)payload=([^&]*)/);
+    if (match) {
+      return JSON.parse(decodeURIComponent(match[1].replace(/\+/g, " ")));
+    }
+  }
+  throw new Error("Unrecognized POST body — expected payload=… or JSON.");
+}
+
 function doGet(e) {
   return ContentService.createTextOutput(
     JSON.stringify({
       ok: true,
-      message: "Portfolio leads endpoint is running. Use POST from your site.",
+      message: "Portfolio leads endpoint is running. POST from the site sends payload=…",
     })
   ).setMimeType(ContentService.MimeType.JSON);
 }
 
-/**
- * POST → body is JSON string (your app sends Content-Type: text/plain).
- */
 function doPost(e) {
   try {
-    if (!e || !e.postData || e.postData.contents === undefined || e.postData.contents === null) {
-      throw new Error("Missing POST body");
-    }
-
-    var raw = e.postData.contents;
-    var data = JSON.parse(raw);
-
+    var data = parseLeadPayload_(e);
     var sheet = getLeadsSheet_();
     ensureHeaderRow_(sheet);
 
@@ -138,4 +113,22 @@ function doPost(e) {
       JSON.stringify({ ok: false, error: String(err) })
     ).setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+/**
+ * Run once from the editor (▶) to confirm the sheet accepts rows.
+ */
+function testAppendRow() {
+  var sheet = getLeadsSheet_();
+  ensureHeaderRow_(sheet);
+  sheet.appendRow([
+    new Date().toISOString(),
+    "test",
+    "Tester",
+    "test@example.com",
+    "",
+    "Manual test",
+    "If you see this row, the spreadsheet is wired correctly.",
+    "",
+  ]);
 }
