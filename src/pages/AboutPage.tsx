@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { PAGE_GUTTERS, PAGE_MAX_W } from "../constants/pageLayout";
 import aboutImg from "../assets/images/about-me.jpg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 
@@ -118,23 +119,23 @@ export function AboutPage() {
     <div className="font-[Manrope] text-slate-900">
       {/* Hero */}
       <header
-        className="flex flex-col items-center justify-center gap-4 px-6 py-[72px] text-center sm:py-[90px]"
+        className={`flex flex-col items-center justify-center gap-4 py-[72px] text-center sm:py-[90px] ${PAGE_GUTTERS}`}
         style={{
           background:
             "linear-gradient(138deg, rgba(0, 194, 130, 0.05) 0%, rgba(0, 194, 130, 0.1) 100%)",
         }}
       >
         <h1 className="text-2xl font-bold text-[#0a0a0a] sm:text-[24px]">About Me</h1>
-        <p className="max-w-xl text-[15px] leading-7 text-[#7d7d7d]">
+        <p className="mx-auto max-w-2xl text-[15px] leading-7 text-[#7d7d7d]">
           A passionate designer dedicated to creating meaningful digital experiences
         </p>
       </header>
 
       {/* My Story */}
-      <section className="mx-auto max-w-[1080px] px-6 py-14 sm:py-[72px]">
+      <section className={`${PAGE_MAX_W} ${PAGE_GUTTERS} py-14 sm:py-[72px]`}>
         <h2 className="mb-10 text-left text-lg font-bold text-[#0a0a0a] sm:text-xl">My Story</h2>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-12">
-          <div className="space-y-5 text-[15px] leading-7 text-[#7d7d7d]">
+          <div className="max-w-[65ch] space-y-5 text-[15px] leading-7 text-[#7d7d7d] lg:max-w-none">
             {STORY_PARAS.map((p) => (
               <p key={p.slice(0, 40)}>{p}</p>
             ))}
@@ -146,8 +147,8 @@ export function AboutPage() {
       </section>
 
       {/* My Values */}
-      <section className="border-t border-[#f2f2f2] bg-slate-50/80 px-6 py-14 sm:py-[72px]">
-        <div className="mx-auto max-w-[1080px]">
+      <section className={`border-t border-[#f2f2f2] bg-slate-50/80 py-14 sm:py-[72px] ${PAGE_GUTTERS}`}>
+        <div className={PAGE_MAX_W}>
           <h2 className="mb-10 text-center text-lg font-bold text-[#0a0a0a] sm:text-xl">My Values</h2>
           <div className="grid gap-5 sm:grid-cols-2">
             {VALUES.map((v) => (
@@ -167,7 +168,7 @@ export function AboutPage() {
       </section>
 
       {/* My Journey — dots sit on center axis; no stretched spacer column */}
-      <section className="mx-auto max-w-[1080px] px-6 py-14 sm:py-[72px]">
+      <section className={`${PAGE_MAX_W} ${PAGE_GUTTERS} py-14 sm:py-[72px]`}>
         <h2 className="mb-12 text-center text-lg font-bold text-[#0a0a0a] sm:text-xl">My Journey</h2>
         <div className="relative">
           <div
@@ -210,8 +211,8 @@ export function AboutPage() {
       </section>
 
       {/* Tools & Skills */}
-      <section className="border-t border-[#f2f2f2] bg-slate-50/80 px-6 py-14 sm:py-[72px]">
-        <div className="mx-auto max-w-[1080px]">
+      <section className={`border-t border-[#f2f2f2] bg-slate-50/80 py-14 sm:py-[72px] ${PAGE_GUTTERS}`}>
+        <div className={PAGE_MAX_W}>
           <h2 className="mb-10 text-center text-lg font-bold text-[#0a0a0a] sm:text-xl">Tools &amp; Skills</h2>
           <div className="flex flex-wrap justify-center gap-3">
             {TOOL_PILLS.map((t) => (
@@ -227,10 +228,10 @@ export function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-[1080px] px-6 py-16 sm:py-20">
+      <section className={`${PAGE_MAX_W} ${PAGE_GUTTERS} py-16 sm:py-20`}>
         <div className="flex flex-col items-center gap-4 text-center">
           <h2 className="text-lg font-bold text-[#0a0a0a] sm:text-xl">Interested in working together?</h2>
-          <p className="max-w-md text-[15px] text-[#7d7d7d]">
+          <p className="mx-auto max-w-xl px-2 text-[15px] text-[#7d7d7d] sm:px-0">
             I&apos;m always open to discussing new projects, creative ideas, or opportunities to collaborate.
           </p>
           <Link

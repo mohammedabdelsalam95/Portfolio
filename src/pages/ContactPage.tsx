@@ -4,6 +4,7 @@ import socialLinkedin from "../assets/icons/social-linkedin.svg";
 import socialBehance from "../assets/icons/social-behance.svg";
 import socialEmail from "../assets/icons/social-email.svg";
 import { CONTACT_EMAIL } from "../config/contact";
+import { PAGE_GUTTERS, PAGE_MAX_W } from "../constants/pageLayout";
 import {
   appendLeadToSheet,
   buildMailtoHref,
@@ -53,19 +54,19 @@ export function ContactPage() {
   return (
     <div className="font-[Manrope] text-[#0a0a0a]">
       <header
-        className="px-6 py-[72px] text-center sm:py-[90px]"
+        className={`py-[72px] text-center sm:py-[90px] ${PAGE_GUTTERS}`}
         style={{
           background:
             "linear-gradient(171deg, rgba(0, 194, 130, 0.05) 0%, rgba(0, 194, 130, 0.1) 100%)",
         }}
       >
         <h1 className="text-2xl font-bold text-[#0a0a0a] sm:text-[27px]">Let&apos;s Connect</h1>
-        <p className="mx-auto mt-4 max-w-xl text-[15px] leading-7 text-[#7d7d7d]">
+        <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-7 text-[#7d7d7d]">
           Have a project in mind or want to collaborate? I&apos;d love to hear from you.
         </p>
       </header>
 
-      <section className="mx-auto max-w-[1080px] px-6 py-14 sm:py-[72px]">
+      <section className={`${PAGE_MAX_W} ${PAGE_GUTTERS} py-14 sm:py-[72px]`}>
         <h2 className="mb-10 text-center text-lg font-bold sm:text-xl">Get in Touch</h2>
 
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
@@ -255,22 +256,24 @@ export function ContactPage() {
       </section>
 
       <section
-        className="border-t border-[#f2f2f2] px-6 py-12 text-center"
+        className={`border-t border-[#f2f2f2] py-12 ${PAGE_GUTTERS}`}
         style={{
           background:
             "linear-gradient(90deg, rgba(0, 194, 130, 0.06) 0%, rgba(0, 194, 130, 0.02) 100%)",
         }}
       >
-        <h3 className="text-base font-bold text-[#0a0a0a]">Response time</h3>
-        <p className="mx-auto mt-2 max-w-lg text-[15px] text-[#7d7d7d]">
-          I typically respond within 24–48 hours on business days. For urgent inquiries, mention it in the subject line.
-        </p>
-        <Link
-          to="/start-project"
-          className="mt-8 inline-block text-[15px] font-semibold text-[#00c282] underline underline-offset-4 hover:opacity-90"
-        >
-          Prefer a structured brief? Start a project →
-        </Link>
+        <div className={`${PAGE_MAX_W} text-center`}>
+          <h3 className="text-base font-bold text-[#0a0a0a]">Response time</h3>
+          <p className="mx-auto mt-2 max-w-2xl px-2 text-[15px] leading-relaxed text-[#7d7d7d] sm:px-0">
+            I typically respond within 24–48 hours on business days. For urgent inquiries, mention it in the subject line.
+          </p>
+          <Link
+            to="/start-project"
+            className="mt-8 inline-block text-[15px] font-semibold text-[#00c282] underline underline-offset-4 hover:opacity-90"
+          >
+            Prefer a structured brief? Start a project →
+          </Link>
+        </div>
       </section>
     </div>
   );
