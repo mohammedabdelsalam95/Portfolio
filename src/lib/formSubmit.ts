@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL, GOOGLE_SCRIPT_URL, WHATSAPP_NUMBER } from "../config/contact";
+import { GOOGLE_SCRIPT_URL, WHATSAPP_NUMBER } from "../config/contact";
 
 export type LeadPayload = {
   form: "contact" | "start-project";
@@ -14,9 +14,10 @@ export type LeadPayload = {
 /**
  * Fire-and-forget POST to Google Apps Script web app.
  *
- * Uses `application/x-www-form-urlencoded` with a `payload` field so the
- * request stays a "simple" cross-origin POST (works with `no-cors`). Raw JSON
- * + text/plain is often dropped or mishandled by the browser for script.google.com.
+ * Uses `application/x-www-form-urlencoded` with a `payload` field (simple CORS request).
+ *
+ * Uses `sendBeacon` first, then `fetch` with `keepalive`, so the POST is likely to finish
+ * even if the user navigates away quickly.
  */
 export function appendLeadToSheet(payload: LeadPayload): void {
   if (!GOOGLE_SCRIPT_URL) return;
@@ -25,16 +26,24 @@ export function appendLeadToSheet(payload: LeadPayload): void {
     _ts: new Date().toISOString(),
   });
   const body = `payload=${encodeURIComponent(json)}`;
-  fetch(GOOGLE_SCRIPT_URL.trim(), {
+  const url = GOOGLE_SCRIPT_URL.trim();
+
+  try {
+    const blob = new Blob([body], { type: "application/x-www-form-urlencoded" });
+    if (navigator.sendBeacon(url, blob)) {
+      return;
+    }
+  } catch {
+    /* continue to fetch */
+  }
+
+  void fetch(url, {
     method: "POST",
     mode: "no-cors",
+    keepalive: true,
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
   }).catch(() => {});
-}
-
-export function buildMailtoHref(subject: string, body: string): string {
-  return `mailto:${encodeURIComponent(CONTACT_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 function normalizeWhatsAppDigits(input: string): string {

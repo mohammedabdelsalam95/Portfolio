@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   appendLeadToSheet,
-  buildMailtoHref,
   buildWhatsAppHref,
   isGoogleSheetConfigured,
   isWhatsAppConfigured,
@@ -100,7 +99,7 @@ export function StartProjectPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
-  function submitProject(channel: "email" | "whatsapp") {
+  function submitProject() {
     const elName = document.getElementById("sp-contact-name") as HTMLInputElement | null;
     const elEmail = document.getElementById("sp-contact-email") as HTMLInputElement | null;
     const elSubj = document.getElementById("sp-contact-subject") as HTMLInputElement | null;
@@ -132,12 +131,11 @@ export function StartProjectPage() {
       extras: buildBriefSummary(),
     });
 
-    if (channel === "email") {
-      window.location.href = buildMailtoHref(subj, bodyText);
-    } else {
+    if (isWhatsAppConfigured()) {
       const href = buildWhatsAppHref(`*${subj}*\n\n${bodyText}`);
       if (href) window.open(href, "_blank", "noopener,noreferrer");
     }
+
     setStep(5);
   }
 
@@ -502,26 +500,22 @@ export function StartProjectPage() {
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end">
                 <button
                   type="button"
-                  onClick={() => submitProject("email")}
+                  onClick={submitProject}
                   className="rounded-[9.25px] bg-[#00c282] px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
-                  Submit with email
+                  {isWhatsAppConfigured() ? "Submit (WhatsApp)" : "Submit"}
                 </button>
-                {isWhatsAppConfigured() ? (
-                  <button
-                    type="button"
-                    onClick={() => submitProject("whatsapp")}
-                    className="rounded-[9.25px] border-2 border-[#25D366] bg-white px-8 py-3 text-sm font-semibold text-[#128C7E] transition-colors hover:bg-[#25D366]/5"
-                  >
-                    Submit with WhatsApp
-                  </button>
-                ) : null}
               </div>
             </div>
 
             {isGoogleSheetConfigured() ? (
               <p className="mt-4 text-center text-xs text-[#6a7282] sm:text-right">
-                A copy may be saved to my Google Sheet when you submit.
+                Details are saved to my sheet.
+                {isWhatsAppConfigured() ? " WhatsApp opens with the same summary." : ""}
+              </p>
+            ) : isWhatsAppConfigured() ? (
+              <p className="mt-4 text-center text-xs text-[#6a7282] sm:text-right">
+                WhatsApp will open with your project summary.
               </p>
             ) : null}
           </div>

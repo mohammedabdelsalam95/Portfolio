@@ -7,7 +7,6 @@ import { CONTACT_EMAIL } from "../config/contact";
 import { PAGE_GUTTERS, PAGE_MAX_W } from "../constants/pageLayout";
 import {
   appendLeadToSheet,
-  buildMailtoHref,
   buildWhatsAppHref,
   isGoogleSheetConfigured,
   isWhatsAppConfigured,
@@ -24,7 +23,7 @@ export function ContactPage() {
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
 
-  function sendVia(channel: "email" | "whatsapp") {
+  function submitContact() {
     const form = document.getElementById("contact-form") as HTMLFormElement | null;
     if (!form?.checkValidity()) {
       form?.reportValidity();
@@ -42,12 +41,11 @@ export function ContactPage() {
       message: message.trim(),
     });
 
-    if (channel === "email") {
-      window.location.href = buildMailtoHref(subj, bodyText);
-    } else {
+    if (isWhatsAppConfigured()) {
       const href = buildWhatsAppHref(`*${subj}*\n\n${bodyText}`);
       if (href) window.open(href, "_blank", "noopener,noreferrer");
     }
+
     setSent(true);
   }
 
@@ -207,48 +205,34 @@ export function ContactPage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <button
                 type="button"
-                onClick={() => sendVia("email")}
-                className="w-full rounded-lg bg-[#00c282] py-3.5 text-[15px] font-semibold text-white transition hover:brightness-105 sm:w-auto sm:min-w-[160px] sm:px-8"
+                onClick={submitContact}
+                className="w-full rounded-lg bg-[#00c282] py-3.5 text-[15px] font-semibold text-white transition hover:brightness-105 sm:w-auto sm:min-w-[200px] sm:px-8"
               >
-                Send with email
+                {isWhatsAppConfigured() ? "Send (WhatsApp)" : "Send message"}
               </button>
-              {isWhatsAppConfigured() ? (
-                <button
-                  type="button"
-                  onClick={() => sendVia("whatsapp")}
-                  className="w-full rounded-lg border-2 border-[#25D366] bg-white py-3.5 text-[15px] font-semibold text-[#128C7E] transition hover:bg-[#25D366]/5 sm:w-auto sm:min-w-[160px] sm:px-8"
-                >
-                  Send with WhatsApp
-                </button>
-              ) : null}
             </div>
 
             {isGoogleSheetConfigured() ? (
               <p className="mt-3 text-xs leading-relaxed text-[#6a7282]">
-                A copy may be saved to my Google Sheet when you send (no account required).
+                Your message is saved to my sheet. {isWhatsAppConfigured() ? "WhatsApp opens so you can send the same text there too." : ""}
+              </p>
+            ) : isWhatsAppConfigured() ? (
+              <p className="mt-3 text-xs leading-relaxed text-[#6a7282]">
+                WhatsApp will open with your message.
               </p>
             ) : null}
 
             {sent ? (
               <p className="mt-4 text-sm text-[#007a55]">
-                If nothing opened, email me at{" "}
-                <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium underline">
-                  {CONTACT_EMAIL}
-                </a>{" "}
-                {isWhatsAppConfigured() ? (
+                Thanks — your message was received.
+                {isWhatsAppConfigured() ? " Send the prefilled chat in WhatsApp if it opened." : ""}
+                {!isGoogleSheetConfigured() && !isWhatsAppConfigured() ? (
                   <>
-                    or use{" "}
-                    <a
-                      href={buildWhatsAppHref("Hi — reaching out from your portfolio.")}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium underline"
-                    >
-                      WhatsApp
-                    </a>
+                    {" "}
+                    Configure <code className="rounded bg-[#f3f4f6] px-1">VITE_GOOGLE_SCRIPT_URL</code> or{" "}
+                    <code className="rounded bg-[#f3f4f6] px-1">VITE_WHATSAPP_NUMBER</code> so submissions are delivered.
                   </>
                 ) : null}
-                .
               </p>
             ) : null}
           </form>
