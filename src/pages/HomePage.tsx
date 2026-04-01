@@ -64,7 +64,7 @@ export default function HomePage() {
             <div className="relative aspect-square overflow-hidden rounded-[27px]">
               <img src={heroImg} alt="Mohammed Helaly - UX/UI Designer" className="h-full w-full object-cover" />
             </div>
-            <div className="absolute -left-9 bottom-[144px] rounded-[18px] bg-white p-[18px] shadow-2xl">
+            <div className="absolute -left-9 bottom-[90px] rounded-[18px] bg-white p-[18px] shadow-2xl">
               <img src={mhLogo} alt="MH Logo" className="h-[144px] w-[144px] object-contain" />
             </div>
             <div className="absolute -top-[27px] right-0 h-[108px] w-[108px] rounded-[27px] bg-[#00c282]/20 blur-[64px]" />
