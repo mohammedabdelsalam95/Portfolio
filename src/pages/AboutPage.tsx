@@ -116,10 +116,10 @@ function ValueIcon({ kind }: { kind: Values[number]["icon"] }) {
 
 export function AboutPage() {
   return (
-    <div className="font-[Manrope] text-slate-900">
-      {/* Hero */}
+    <div className="font-[Manrope] text-slate-900 pt-[72px]">
+      {/* Hero — extra top padding below fixed nav */}
       <header
-        className={`flex flex-col items-center justify-center gap-4 py-[72px] text-center sm:py-[90px] ${PAGE_GUTTERS}`}
+        className={`flex flex-col items-center justify-center gap-4 pb-[72px] pt-12 text-center sm:pb-[90px] sm:pt-16 md:pt-20 ${PAGE_GUTTERS}`}
         style={{
           background:
             "linear-gradient(138deg, rgba(0, 194, 130, 0.05) 0%, rgba(0, 194, 130, 0.1) 100%)",

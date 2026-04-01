@@ -52,9 +52,9 @@ export function ContactPage() {
   }
 
   return (
-    <div className="font-[Manrope] text-[#0a0a0a]">
+    <div className="font-[Manrope] text-[#0a0a0a] pt-[72px]">
       <header
-        className={`py-[72px] text-center sm:py-[90px] ${PAGE_GUTTERS}`}
+        className={`pb-[72px] pt-12 text-center sm:pb-[90px] sm:pt-16 md:pt-20 ${PAGE_GUTTERS}`}
         style={{
           background:
             "linear-gradient(171deg, rgba(0, 194, 130, 0.05) 0%, rgba(0, 194, 130, 0.1) 100%)",
