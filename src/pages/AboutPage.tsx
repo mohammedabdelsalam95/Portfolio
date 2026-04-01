@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { PAGE_GUTTERS, PAGE_MAX_W } from "../constants/pageLayout";
-import aboutImg from "../assets/images/about-me.jpg";
+import aboutImg from "../assets/images/my-story.png";
 import arrowRight from "../assets/icons/arrow-right.svg";
 
 const STORY_PARAS = [
