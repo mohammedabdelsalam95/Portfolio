@@ -503,7 +503,7 @@ export function StartProjectPage() {
                   onClick={submitProject}
                   className="rounded-[9.25px] bg-[#00c282] px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
-                  {isWhatsAppConfigured() ? "Submit (WhatsApp)" : "Submit"}
+                  {isWhatsAppConfigured() ? "Submit & open WhatsApp" : "Submit"}
                 </button>
               </div>
             </div>

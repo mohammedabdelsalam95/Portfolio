@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import socialLinkedin from "../assets/icons/social-linkedin.svg";
 import socialBehance from "../assets/icons/social-behance.svg";
-import socialEmail from "../assets/icons/social-email.svg";
 import { CONTACT_EMAIL } from "../config/contact";
 import { PAGE_GUTTERS, PAGE_MAX_W } from "../constants/pageLayout";
 import {
@@ -73,12 +72,7 @@ export function ContactPage() {
               <p className="text-[13px] font-semibold uppercase tracking-wide text-[#00c282]">
                 Email
               </p>
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="mt-2 block text-[15px] font-medium text-[#0a0a0a] underline decoration-[#00c282]/40 underline-offset-2 hover:text-[#00c282]"
-              >
-                {CONTACT_EMAIL}
-              </a>
+              <p className="mt-2 break-all text-[15px] font-medium text-[#0a0a0a]">{CONTACT_EMAIL}</p>
             </div>
 
             <div className="rounded-xl border border-[#e5e7eb] bg-white p-6 shadow-sm">
@@ -122,13 +116,6 @@ export function ContactPage() {
                   aria-label="Behance"
                 >
                   <img src={socialBehance} alt="" className="size-5" />
-                </a>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  className="flex size-11 items-center justify-center rounded-full border border-[#e5e7eb] bg-white transition-colors hover:border-[#00c282]"
-                  aria-label="Email"
-                >
-                  <img src={socialEmail} alt="" className="size-5" />
                 </a>
               </div>
             </div>
@@ -208,13 +195,14 @@ export function ContactPage() {
                 onClick={submitContact}
                 className="w-full rounded-lg bg-[#00c282] py-3.5 text-[15px] font-semibold text-white transition hover:brightness-105 sm:w-auto sm:min-w-[200px] sm:px-8"
               >
-                {isWhatsAppConfigured() ? "Send (WhatsApp)" : "Send message"}
+                {isWhatsAppConfigured() ? "Submit & open WhatsApp" : "Submit"}
               </button>
             </div>
 
             {isGoogleSheetConfigured() ? (
               <p className="mt-3 text-xs leading-relaxed text-[#6a7282]">
-                Your message is saved to my sheet. {isWhatsAppConfigured() ? "WhatsApp opens so you can send the same text there too." : ""}
+                Your message is saved to my sheet.
+                {isWhatsAppConfigured() ? " WhatsApp opens with the same text if you want to chat there." : ""}
               </p>
             ) : isWhatsAppConfigured() ? (
               <p className="mt-3 text-xs leading-relaxed text-[#6a7282]">
@@ -225,7 +213,7 @@ export function ContactPage() {
             {sent ? (
               <p className="mt-4 text-sm text-[#007a55]">
                 Thanks — your message was received.
-                {isWhatsAppConfigured() ? " Send the prefilled chat in WhatsApp if it opened." : ""}
+                {isWhatsAppConfigured() ? " Confirm in WhatsApp if that tab opened." : ""}
                 {!isGoogleSheetConfigured() && !isWhatsAppConfigured() ? (
                   <>
                     {" "}
