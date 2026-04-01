@@ -1,0 +1,13 @@
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA client-side routing: `public/_redirects` is copied to `dist` (/* → /index.html 200).
+# Set env vars in Netlify UI: Site settings → Environment variables
+# (e.g. VITE_CONTACT_EMAIL, VITE_WHATSAPP_NUMBER, VITE_GOOGLE_SCRIPT_URL).
+
+# Optional: pin Node
+# [build.environment]
+#   NODE_VERSION = "20"
