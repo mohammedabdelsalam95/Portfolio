@@ -72,6 +72,7 @@ export function StartProjectPage() {
   const [contactPhone, setContactPhone] = useState("");
   const [contactSubject, setContactSubject] = useState("");
   const [contactMessage, setContactMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   function buildBriefSummary(): string {
     const lines: string[] = [];
@@ -99,7 +100,7 @@ export function StartProjectPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
-  function submitProject() {
+  async function submitProject() {
     const elName = document.getElementById("sp-contact-name") as HTMLInputElement | null;
     const elEmail = document.getElementById("sp-contact-email") as HTMLInputElement | null;
     const elSubj = document.getElementById("sp-contact-subject") as HTMLInputElement | null;
@@ -121,22 +122,27 @@ export function StartProjectPage() {
     const bodyText = `${contactMessage}${phoneLine}\n\n— ${contactName} <${contactEmail}>`;
     const subj = contactSubject.trim() || "Project inquiry";
 
-    appendLeadToSheet({
-      form: "start-project",
-      name: contactName.trim(),
-      email: contactEmail.trim(),
-      phone: contactPhone.trim() || undefined,
-      subject: subj,
-      message: contactMessage.trim(),
-      extras: buildBriefSummary(),
-    });
+    setSubmitting(true);
+    try {
+      await appendLeadToSheet({
+        form: "start-project",
+        name: contactName.trim(),
+        email: contactEmail.trim(),
+        phone: contactPhone.trim() || undefined,
+        subject: subj,
+        message: contactMessage.trim(),
+        extras: buildBriefSummary(),
+      });
 
-    if (isWhatsAppConfigured()) {
-      const href = buildWhatsAppHref(`*${subj}*\n\n${bodyText}`);
-      if (href) window.open(href, "_blank", "noopener,noreferrer");
+      if (isWhatsAppConfigured()) {
+        const href = buildWhatsAppHref(`*${subj}*\n\n${bodyText}`);
+        if (href) window.open(href, "_blank", "noopener,noreferrer");
+      }
+
+      setStep(5);
+    } finally {
+      setSubmitting(false);
     }
-
-    setStep(5);
   }
 
   const toggleSet = (set: Set<string>, id: string, update: (s: Set<string>) => void) => {
@@ -500,18 +506,22 @@ export function StartProjectPage() {
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end">
                 <button
                   type="button"
-                  onClick={submitProject}
-                  className="rounded-[9.25px] bg-[#00c282] px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  disabled={submitting}
+                  onClick={() => void submitProject()}
+                  className="rounded-[9.25px] bg-[#00c282] px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {isWhatsAppConfigured() ? "Submit & open WhatsApp" : "Submit"}
+                  {submitting
+                    ? "Saving…"
+                    : isWhatsAppConfigured()
+                      ? "Submit & open WhatsApp"
+                      : "Submit"}
                 </button>
               </div>
             </div>
 
             {isGoogleSheetConfigured() ? (
               <p className="mt-4 text-center text-xs text-[#6a7282] sm:text-right">
-                Details are saved to my sheet.
-                {isWhatsAppConfigured() ? " WhatsApp opens with the same summary." : ""}
+                Details are saved to the sheet first; then WhatsApp opens if enabled.
               </p>
             ) : isWhatsAppConfigured() ? (
               <p className="mt-4 text-center text-xs text-[#6a7282] sm:text-right">

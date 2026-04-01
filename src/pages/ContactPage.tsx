@@ -18,11 +18,13 @@ const LOCATION = "Cairo, Egypt";
 export function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  function submitContact() {
+  async function submitContact() {
     const form = document.getElementById("contact-form") as HTMLFormElement | null;
     if (!form?.checkValidity()) {
       form?.reportValidity();
@@ -30,22 +32,29 @@ export function ContactPage() {
     }
 
     const subj = subject.trim() || "Portfolio contact";
-    const bodyText = `${message}\n\n— ${name} <${email}>`;
+    const phoneLine = phone.trim() ? `\nPhone: ${phone.trim()}` : "";
+    const bodyText = `${message}${phoneLine}\n\n— ${name} <${email}>`;
 
-    appendLeadToSheet({
-      form: "contact",
-      name: name.trim(),
-      email: email.trim(),
-      subject: subj,
-      message: message.trim(),
-    });
+    setSubmitting(true);
+    try {
+      await appendLeadToSheet({
+        form: "contact",
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim() || undefined,
+        subject: subj,
+        message: message.trim(),
+      });
 
-    if (isWhatsAppConfigured()) {
-      const href = buildWhatsAppHref(`*${subj}*\n\n${bodyText}`);
-      if (href) window.open(href, "_blank", "noopener,noreferrer");
+      if (isWhatsAppConfigured()) {
+        const href = buildWhatsAppHref(`*${subj}*\n\n${bodyText}`);
+        if (href) window.open(href, "_blank", "noopener,noreferrer");
+      }
+
+      setSent(true);
+    } finally {
+      setSubmitting(false);
     }
-
-    setSent(true);
   }
 
   return (
@@ -159,6 +168,21 @@ export function ContactPage() {
                 />
               </div>
               <div>
+                <label htmlFor="contact-phone" className="mb-2 block text-sm font-bold text-[#0a0a0a]">
+                  Phone <span className="font-normal text-[#6a7282]">(optional)</span>
+                </label>
+                <input
+                  id="contact-phone"
+                  name="phone"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full rounded-lg border border-[#e5e7eb] bg-white px-4 py-3 text-[15px] text-[#0a0a0a] placeholder:text-[#99a1af] focus:border-[#00c282] focus:outline-none focus:ring-2 focus:ring-[#00c282]/20"
+                  placeholder="+00 000 000 0000"
+                  autoComplete="tel"
+                />
+              </div>
+              <div>
                 <label htmlFor="contact-subject" className="mb-2 block text-sm font-bold text-[#0a0a0a]">
                   Subject
                 </label>
@@ -192,17 +216,21 @@ export function ContactPage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <button
                 type="button"
-                onClick={submitContact}
-                className="w-full rounded-lg bg-[#00c282] py-3.5 text-[15px] font-semibold text-white transition hover:brightness-105 sm:w-auto sm:min-w-[200px] sm:px-8"
+                disabled={submitting}
+                onClick={() => void submitContact()}
+                className="w-full rounded-lg bg-[#00c282] py-3.5 text-[15px] font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-[200px] sm:px-8"
               >
-                {isWhatsAppConfigured() ? "Submit & open WhatsApp" : "Submit"}
+                {submitting
+                  ? "Saving…"
+                  : isWhatsAppConfigured()
+                    ? "Submit & open WhatsApp"
+                    : "Submit"}
               </button>
             </div>
 
             {isGoogleSheetConfigured() ? (
               <p className="mt-3 text-xs leading-relaxed text-[#6a7282]">
-                Your message is saved to my sheet.
-                {isWhatsAppConfigured() ? " WhatsApp opens with the same text if you want to chat there." : ""}
+                Your details are saved to the sheet first; then WhatsApp opens if enabled.
               </p>
             ) : isWhatsAppConfigured() ? (
               <p className="mt-3 text-xs leading-relaxed text-[#6a7282]">

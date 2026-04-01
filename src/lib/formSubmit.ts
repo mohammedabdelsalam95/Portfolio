@@ -12,15 +12,14 @@ export type LeadPayload = {
 };
 
 /**
- * Fire-and-forget POST to Google Apps Script web app.
+ * POST lead to Google Apps Script, then wait briefly so the row can be written
+ * before opening WhatsApp or advancing the wizard.
  *
- * Uses `application/x-www-form-urlencoded` with a `payload` field (simple CORS request).
- *
- * Uses `sendBeacon` first, then `fetch` with `keepalive`, so the POST is likely to finish
- * even if the user navigates away quickly.
+ * Always `await` this in the UI before any follow-up action.
  */
-export function appendLeadToSheet(payload: LeadPayload): void {
-  if (!GOOGLE_SCRIPT_URL) return;
+export async function appendLeadToSheet(payload: LeadPayload): Promise<void> {
+  if (!GOOGLE_SCRIPT_URL?.trim()) return;
+
   const json = JSON.stringify({
     ...payload,
     _ts: new Date().toISOString(),
@@ -29,21 +28,19 @@ export function appendLeadToSheet(payload: LeadPayload): void {
   const url = GOOGLE_SCRIPT_URL.trim();
 
   try {
-    const blob = new Blob([body], { type: "application/x-www-form-urlencoded" });
-    if (navigator.sendBeacon(url, blob)) {
-      return;
-    }
+    await fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      keepalive: true,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    });
   } catch {
-    /* continue to fetch */
+    /* network failure — user can still use WhatsApp */
   }
 
-  void fetch(url, {
-    method: "POST",
-    mode: "no-cors",
-    keepalive: true,
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body,
-  }).catch(() => {});
+  // Let Apps Script finish appendRow before the next browser action
+  await new Promise((r) => setTimeout(r, 450));
 }
 
 function normalizeWhatsAppDigits(input: string): string {
@@ -63,5 +60,5 @@ export function isWhatsAppConfigured(): boolean {
 }
 
 export function isGoogleSheetConfigured(): boolean {
-  return Boolean(GOOGLE_SCRIPT_URL);
+  return Boolean(GOOGLE_SCRIPT_URL?.trim());
 }
