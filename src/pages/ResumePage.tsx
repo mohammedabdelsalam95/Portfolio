@@ -59,8 +59,8 @@ export function ResumePage() {
   return (
     <div className="min-h-screen bg-[#f9fafb] pt-[73px] font-sans text-[#0a0a0a]">
       <header className="border-b border-[#e5e7eb] bg-[#f9fafb]">
-        <div className="mx-auto max-w-[1080px] px-[208.5px] py-10">
-          <div className="px-[36px] flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-6 lg:px-12">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="text-[24px] font-bold leading-tight text-[#0a0a0a]">
                 Resume
@@ -81,16 +81,16 @@ export function ResumePage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1080px] px-[208.5px] pb-20">
+      <main className="mx-auto max-w-[1080px] px-4 pb-20 sm:px-6 lg:px-12">
         {/* Experience */}
-        <section className="px-[36px] pt-12">
+        <section className="pt-12">
           <div className="mb-8 flex items-center gap-4">
             <SectionIcon />
             <h2 className="text-xl font-bold text-[#0a0a0a]">Experience</h2>
           </div>
 
           <div className="flex flex-col gap-6">
-            <article className="rounded-[18px] border border-[#e5e7eb] bg-white p-[37px]">
+            <article className="rounded-[18px] border border-[#e5e7eb] bg-white p-6 sm:p-8 lg:p-[37px]">
               <h3 className="text-lg font-bold text-[#00c282]">UX/UI Designer</h3>
               <p className="mt-1 font-semibold text-[#0a0a0a]">Supercommerce</p>
               <p className="mt-1 text-sm text-[#4a5565]">April 2024 – Present</p>
@@ -109,7 +109,7 @@ export function ResumePage() {
               </ul>
             </article>
 
-            <article className="rounded-[18px] border border-[#e5e7eb] bg-white p-[37px]">
+            <article className="rounded-[18px] border border-[#e5e7eb] bg-white p-6 sm:p-8 lg:p-[37px]">
               <h3 className="text-lg font-bold text-[#00c282]">UX/UI Designer</h3>
               <p className="mt-1 font-semibold text-[#0a0a0a]">Evertizing</p>
               <p className="mt-1 text-sm text-[#4a5565]">January 2023 – Present</p>
@@ -128,7 +128,7 @@ export function ResumePage() {
               </p>
             </article>
 
-            <article className="rounded-[18px] border border-[#e5e7eb] bg-white p-[37px]">
+            <article className="rounded-[18px] border border-[#e5e7eb] bg-white p-6 sm:p-8 lg:p-[37px]">
               <h3 className="text-lg font-bold text-[#00c282]">
                 Junior UX/UI Designer
               </h3>
@@ -154,12 +154,12 @@ export function ResumePage() {
         </section>
 
         {/* Education */}
-        <section className="px-[36px] pt-16">
+        <section className="pt-16">
           <div className="mb-8 flex items-center gap-4">
             <SectionIcon />
             <h2 className="text-xl font-bold text-[#0a0a0a]">Education</h2>
           </div>
-          <div className="rounded-[18px] border border-[#e5e7eb] bg-white p-[37px]">
+          <div className="rounded-[18px] border border-[#e5e7eb] bg-white p-6 sm:p-8 lg:p-[37px]">
             <h3 className="text-lg font-bold text-[#00c282]">
               BSc. Computer Science (Software Industry and Multimedia)
             </h3>
@@ -177,19 +177,19 @@ export function ResumePage() {
         </section>
 
         {/* Certifications */}
-        <section className="px-[36px] pt-16">
+        <section className="pt-16">
           <div className="mb-8 flex items-center gap-4">
             <SectionIcon />
             <h2 className="text-xl font-bold text-[#0a0a0a]">Certifications</h2>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="rounded-[18px] border border-[#e5e7eb] bg-white p-[37px]">
+            <div className="rounded-[18px] border border-[#e5e7eb] bg-white p-6 sm:p-8 lg:p-[37px]">
               <p className="font-semibold text-[#0a0a0a]">
                 Google UX Design Professional Certificate
               </p>
               <p className="mt-2 text-sm text-[#4a5565]">2022</p>
             </div>
-            <div className="rounded-[18px] border border-[#e5e7eb] bg-white p-[37px]">
+            <div className="rounded-[18px] border border-[#e5e7eb] bg-white p-6 sm:p-8 lg:p-[37px]">
               <p className="font-semibold text-[#0a0a0a]">
                 Interaction Design Foundation - UX Management
               </p>
@@ -199,14 +199,14 @@ export function ResumePage() {
         </section>
 
         {/* Skills & Tools */}
-        <section className="px-[36px] pt-16">
+        <section className="pt-16">
           <div className="mb-8 flex items-center gap-4">
             <SectionIcon />
             <h2 className="text-xl font-bold text-[#0a0a0a]">
               Skills &amp; Tools
             </h2>
           </div>
-          <div className="space-y-8 rounded-[18px] border border-[#e5e7eb] bg-white p-[37px]">
+          <div className="space-y-8 rounded-[18px] border border-[#e5e7eb] bg-white p-6 sm:p-8 lg:p-[37px]">
             <div>
               <h3 className="mb-3 text-sm font-bold text-[#0a0a0a]">
                 Design Skills
