@@ -46,7 +46,7 @@ export default function HomePage() {
             <div className="mt-[36px] flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-[18px]">
               <Link
                 to="/portfolio"
-                className="inline-flex items-center gap-2 rounded-[9.25px] bg-[#00c282] px-[18px] py-[11.75px] text-[15.75px] font-medium text-white transition-opacity hover:opacity-90"
+                className="inline-flex items-center justify-center gap-2 rounded-[9.25px] bg-[#00c282] px-[18px] py-[11.75px] text-[15.75px] font-medium text-white transition-opacity hover:opacity-90"
               >
                 View Portfolio
                 <img src={arrowRight} alt="" className="h-[18px] w-[18px]" />
