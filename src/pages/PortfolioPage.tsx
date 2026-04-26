@@ -21,7 +21,7 @@ export default function PortfolioPage() {
 
       {/* Project Grid */}
       <section className="py-[54px]">
-        <div className="mx-auto max-w-[1368px] px-[64.5px]">
+        <div className="mx-auto max-w-[1368px] px-4 sm:px-6 lg:px-16">
           <div className="grid grid-cols-1 gap-[36px] md:grid-cols-2 lg:grid-cols-3">
             {PROJECTS.map((project) => (
               <article

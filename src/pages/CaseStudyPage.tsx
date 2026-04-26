@@ -39,7 +39,7 @@ function OutcomeIcon() {
   );
 }
 
-const shell = "max-w-[1152px] mx-auto px-6 sm:px-12 lg:px-[172.5px]";
+const shell = "mx-auto w-full max-w-[1152px] px-4 sm:px-6 lg:px-12";
 
 export default function CaseStudyPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -75,7 +75,7 @@ export default function CaseStudyPage() {
     <div className="min-h-screen bg-white pt-[73px]">
       {/* Back to Portfolio */}
       <div className="bg-[#f9fafb] border-b border-[#e5e7eb]">
-        <div className="max-w-[1497px] mx-auto px-[195px] py-[27px]">
+        <div className="mx-auto max-w-[1497px] px-4 py-[27px] sm:px-6 lg:px-12">
           <Link
             to="/portfolio"
             className="inline-flex items-center gap-2 rounded-[9.25px] text-[15.75px] font-medium text-[#4a5565] transition-colors hover:text-[#0a0a0a]"
@@ -89,7 +89,7 @@ export default function CaseStudyPage() {
       {/* Title Section */}
       <section className="border-b border-[#e5e7eb] bg-white py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h1 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">
               {project.caseStudyTitle}
             </h1>
@@ -138,7 +138,7 @@ export default function CaseStudyPage() {
       {/* Overview */}
       <section className="py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h2 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">Overview</h2>
             <p className="mt-[27px] text-[18px] leading-[31.5px] text-[#4a5565] whitespace-pre-line">
               {project.overview}
@@ -150,7 +150,7 @@ export default function CaseStudyPage() {
       {/* The Problem */}
       <section className="py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h2 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">The Problem</h2>
             <p className="mt-[27px] text-[18px] leading-[31.5px] text-[#4a5565] whitespace-pre-line">
               {project.problem}
@@ -162,7 +162,7 @@ export default function CaseStudyPage() {
       {/* Research & Insights */}
       <section className="py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h2 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">Research &amp; Insights</h2>
             <p className="mt-[27px] text-[18px] leading-[31.5px] text-[#4a5565] whitespace-pre-line">
               {project.research}
@@ -174,9 +174,9 @@ export default function CaseStudyPage() {
       {/* Design Process */}
       <section className="py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h2 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">Design Process</h2>
-            <div className="mt-[36px] grid grid-cols-3 gap-[27px]">
+            <div className="mt-[36px] grid grid-cols-1 gap-[27px] sm:grid-cols-2 lg:grid-cols-3">
               {project.designProcess.map((step, index) => (
                 <div key={step.title} className="rounded-[18px] border border-[#e5e7eb] p-7">
                   <div className="flex h-[36px] w-[36px] items-center justify-center rounded-full bg-[rgba(0,194,130,0.1)] text-[15.75px] font-bold text-[#00c282]">
@@ -198,7 +198,7 @@ export default function CaseStudyPage() {
       {/* The Solution */}
       <section className="py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h2 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">The Solution</h2>
             <p className="mt-[27px] text-[18px] leading-[31.5px] text-[#4a5565] whitespace-pre-line">
               {project.solution}
@@ -210,9 +210,9 @@ export default function CaseStudyPage() {
       {/* Outcomes & Impact */}
       <section className="py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h2 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">Outcomes &amp; Impact</h2>
-            <div className="mt-[36px] grid grid-cols-3 gap-[36px]">
+            <div className="mt-[36px] grid grid-cols-1 gap-[36px] sm:grid-cols-2 lg:grid-cols-3">
               {project.outcomes.map((outcome) => (
                 <div key={outcome.title} className="flex flex-col items-center text-center">
                   <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[rgba(0,194,130,0.08)]">
@@ -234,7 +234,7 @@ export default function CaseStudyPage() {
       {/* Key Learnings */}
       <section className="py-[72px]">
         <div className={shell}>
-          <div className="px-[36px]">
+          <div className="px-0 sm:px-[18px] lg:px-[36px]">
             <h2 className="text-[24px] font-bold leading-[27px] text-[#0a0a0a]">Key Learnings</h2>
             <p className="mt-[27px] text-[18px] leading-[31.5px] text-[#4a5565] whitespace-pre-line">
               {project.keyLearnings}

@@ -20,8 +20,8 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="border-t border-[#e5e7eb] bg-[#f9fafb]">
-      <div className="mx-auto max-w-[1440px] px-16 pt-[54px]">
-        <div className="grid grid-cols-3 gap-9">
+      <div className="mx-auto max-w-[1440px] px-4 pt-[54px] sm:px-6 lg:px-16">
+        <div className="grid grid-cols-1 gap-9 md:grid-cols-3">
           <div className="flex flex-col gap-[18px]">
             <img src={mhLogo} alt="Mohammed Helaly" className="h-[63px] w-auto object-contain object-left" />
             <p className="max-w-[378px] text-[15.75px] leading-[22.5px] text-[#4a5565]">
