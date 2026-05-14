@@ -71,6 +71,8 @@ export default function CaseStudyPage() {
     );
   }
 
+  const boardOnly = project.caseStudyBoardOnly === true;
+
   return (
     <div className="min-h-screen bg-white pt-[73px]">
       {/* Back to Portfolio */}
@@ -135,6 +137,20 @@ export default function CaseStudyPage() {
         </div>
       </section>
 
+      {boardOnly && project.caseStudyLeadImage && (
+        <section className="border-b border-[#e5e7eb] bg-white py-10 sm:py-12">
+          <div className="mx-auto w-full max-w-[min(100%,1200px)] px-4 sm:px-6 lg:px-8">
+            <img
+              src={project.caseStudyLeadImage}
+              alt={`${project.title} — project hero`}
+              className="mx-auto max-h-[min(70vh,560px)] w-full rounded-[18px] border border-[#e5e7eb] object-cover object-center shadow-sm"
+            />
+          </div>
+        </section>
+      )}
+
+      {!boardOnly && (
+        <>
       {/* Overview */}
       <section className="py-[72px]">
         <div className={shell}>
@@ -242,16 +258,19 @@ export default function CaseStudyPage() {
           </div>
         </div>
       </section>
+        </>
+      )}
 
       {/* Full case study presentation (Figma / deck export) */}
       <section className="border-t border-[#e5e7eb] bg-[#f9fafb] py-[72px]">
         <div className="mx-auto w-full max-w-[min(100%,1400px)] px-4 sm:px-8">
           <h2 className="text-center text-[24px] font-bold leading-[30px] text-[#0a0a0a]">
-            Full case study
+            {boardOnly ? "Case study presentation" : "Full case study"}
           </h2>
           <p className="mx-auto mt-[13px] max-w-[720px] text-center text-[18px] leading-[27px] text-[#4a5565]">
-            Complete visual walkthrough—process, wireframes, UI, and final screens for{" "}
-            {project.title}.
+            {boardOnly
+              ? `Full-frame walkthrough—research, IA, wireframes, UI, and style direction for ${project.title}.`
+              : `Complete visual walkthrough—process, wireframes, UI, and final screens for ${project.title}.`}
           </p>
           <div className="mt-10 overflow-hidden rounded-[18px] border border-[#e5e7eb] bg-white shadow-sm">
             <img

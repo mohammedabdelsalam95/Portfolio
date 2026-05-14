@@ -1,5 +1,5 @@
 import projectAlBarakaEgypt from "../assets/images/project-al-baraka-egypt.png";
-import caseStudyBoardAlBaraka from "../assets/images/case-studies/al-baraka-board.png";
+import caseStudyBoardAlBarakaFull from "../assets/images/case-studies/al-baraka-case-study-full.png";
 import projectResq from "../assets/images/project-resq.png";
 import projectTroviny from "../assets/images/project-troviny.png";
 import projectKooora from "../assets/images/project-kooora.png";
@@ -32,6 +32,10 @@ export interface Project {
   thumbnailFit?: "contain" | "cover";
   /** Full vertical case study board image (Figma / presentation export) */
   caseStudyBoard: string;
+  /** Optional hero image above the board (e.g. Behance cover replacing a deck photo). */
+  caseStudyLeadImage?: string;
+  /** When true, hide long text sections; title, metadata, optional lead image, and board carry the story. */
+  caseStudyBoardOnly?: boolean;
   role: string;
   duration: string;
   team?: string;
@@ -57,7 +61,9 @@ export const PROJECTS: Project[] = [
     tags: ["Product Design", "UX Research", "Fintech"],
     thumbnail: projectAlBarakaEgypt,
     thumbnailFit: "cover",
-    caseStudyBoard: caseStudyBoardAlBaraka,
+    caseStudyLeadImage: projectAlBarakaEgypt,
+    caseStudyBoard: caseStudyBoardAlBarakaFull,
+    caseStudyBoardOnly: true,
     role: "Lead UX/UI Designer",
     duration: "4 months",
     overview:
