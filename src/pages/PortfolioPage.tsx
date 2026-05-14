@@ -36,7 +36,11 @@ export default function PortfolioPage() {
                     <img
                       src={project.thumbnail}
                       alt={project.title}
-                      className="absolute left-1/2 top-1/2 max-h-[92%] max-w-[92%] -translate-x-1/2 -translate-y-1/2 object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                      className={
+                        project.thumbnailFit === "cover"
+                          ? "h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                          : "absolute left-1/2 top-1/2 max-h-[92%] max-w-[92%] -translate-x-1/2 -translate-y-1/2 object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                      }
                     />
                   </div>
                 </Link>

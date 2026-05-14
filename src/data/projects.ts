@@ -1,3 +1,5 @@
+import projectAlBarakaEgypt from "../assets/images/project-al-baraka-egypt.png";
+import caseStudyBoardAlBaraka from "../assets/images/case-studies/al-baraka-board.png";
 import projectResq from "../assets/images/project-resq.png";
 import projectTroviny from "../assets/images/project-troviny.png";
 import projectKooora from "../assets/images/project-kooora.png";
@@ -26,6 +28,8 @@ export interface Project {
   description: string;
   tags: string[];
   thumbnail: string;
+  /** How the thumbnail fills the portfolio card (default contain). */
+  thumbnailFit?: "contain" | "cover";
   /** Full vertical case study board image (Figma / presentation export) */
   caseStudyBoard: string;
   role: string;
@@ -41,6 +45,64 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "al-baraka-egypt",
+    title: "Al Baraka Egypt App Redesign",
+    caseStudyTitle: "Al Baraka Egypt — Self-Service Banking Redesign",
+    caseStudySubtitle:
+      "Improving self-service banking through clear information architecture and an accessible, trustworthy mobile UI.",
+    category: "Mobile Banking App",
+    description:
+      "Improving self-service banking through clear information architecture and accessible UI.",
+    tags: ["Product Design", "UX Research", "Fintech"],
+    thumbnail: projectAlBarakaEgypt,
+    thumbnailFit: "cover",
+    caseStudyBoard: caseStudyBoardAlBaraka,
+    role: "Lead UX/UI Designer",
+    duration: "4 months",
+    overview:
+      "Al Baraka Bank Egypt serves customers who expect fast, transparent access to balances, transfers, and everyday banking on mobile. This redesign focused on reducing cognitive load in high-stakes financial tasks: clearer hierarchy for accounts and net worth, predictable navigation, and UI patterns that work for a wide range of digital literacy and accessibility needs.",
+    problem:
+      "The existing experience mixed dense financial data with weak visual hierarchy, making it hard to scan balances and recent activity at a glance. Key flows (transfer, top-up, pay bill) were not equally discoverable, and some screens overloaded users with options without clear defaults. Trust and clarity—critical in banking—were not consistently supported by layout, spacing, or feedback patterns.",
+    research:
+      "We reviewed analytics and support themes, ran structured interviews with retail banking users, and benchmarked regional and global banking apps. Recurring themes included the need for a stable \"home base\" that summarizes financial health, faster paths to frequent actions, and language and layouts that feel calm rather than cluttered when showing currency and multi-account data.",
+    designProcess: [
+      {
+        title: "Discovery & Audits",
+        description:
+          "Mapped current flows, content inventory, and pain points across home, accounts, transfers, and services.",
+      },
+      {
+        title: "Information Architecture",
+        description:
+          "Defined a clearer model for accounts, net worth, and transactions so users can orient in seconds.",
+      },
+      {
+        title: "Interaction Patterns",
+        description:
+          "Standardized patterns for quick actions, lists, and confirmations aligned with banking mental models.",
+      },
+      {
+        title: "Visual & Accessibility Pass",
+        description:
+          "Refined typography, contrast, and touch targets for readability and WCAG-minded usability on mobile.",
+      },
+      {
+        title: "Prototyping & Iteration",
+        description:
+          "Built interactive prototypes for core journeys and iterated with stakeholders and usability feedback.",
+      },
+    ],
+    solution:
+      "The redesigned home experience leads with a clear welcome state, a prominent net-worth summary, and scannable account cards. Quick actions (transfer, top-up, pay bill) are always within reach, with recent transactions and navigation that reinforce where users are and what happens next. The visual language aligns with Al Baraka's brand while prioritizing legibility and calm layouts for financial data.",
+    outcomes: [
+      { title: "Clearer", subtitle: "Information hierarchy" },
+      { title: "Faster", subtitle: "Core banking tasks" },
+      { title: "More accessible", subtitle: "Mobile UI patterns" },
+    ],
+    keyLearnings:
+      "In banking, clarity beats decoration. Small choices—spacing in amount displays, consistent action placement, and predictable navigation—do more for trust than any single visual motif.",
+  },
   {
     slug: "resq",
     title: "Cars Emergency Rescue App",
