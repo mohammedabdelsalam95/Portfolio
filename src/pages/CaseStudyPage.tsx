@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { PROJECTS } from "../data/projects";
 import arrowRight from "../assets/icons/arrow-right.svg";
@@ -50,6 +51,9 @@ export default function CaseStudyPage() {
     projectIndex >= 0 && projectIndex < PROJECTS.length - 1
       ? PROJECTS[projectIndex + 1]
       : null;
+
+  const [caseStudyBoardLowRes, setCaseStudyBoardLowRes] = useState(false);
+  const [caseStudyBoardNaturalWidth, setCaseStudyBoardNaturalWidth] = useState<number | null>(null);
 
   if (!project) {
     return (
@@ -245,7 +249,7 @@ export default function CaseStudyPage() {
 
       {/* Full case study presentation (Figma / deck export) */}
       <section className="border-t border-[#e5e7eb] bg-[#f9fafb] py-[72px]">
-        <div className="mx-auto w-full max-w-[min(100%,1400px)] px-4 sm:px-8">
+        <div className="mx-auto w-full max-w-[1920px] px-3 sm:px-6 lg:px-10">
           <h2 className="text-center text-[24px] font-bold leading-[30px] text-[#0a0a0a]">
             Full case study
           </h2>
@@ -253,16 +257,33 @@ export default function CaseStudyPage() {
             Complete visual walkthrough—process, wireframes, UI, and final screens for{" "}
             {project.title}.
           </p>
-          <div className="mt-10 flex justify-center overflow-hidden rounded-[18px] border border-[#e5e7eb] bg-white shadow-sm">
+          <div className="mt-10 w-full overflow-hidden rounded-xl border border-[#e5e7eb] bg-white shadow-sm sm:rounded-[18px]">
             <img
               src={project.caseStudyBoard}
               alt={`${project.title} — full case study presentation`}
-              sizes="(max-width: 1400px) 100vw, 1400px"
+              sizes="(max-width: 1920px) 100vw, 1920px"
               loading="lazy"
               decoding="async"
-              className="h-auto max-w-full w-auto object-contain"
+              className="mx-auto block h-auto w-full max-w-full object-contain object-top"
+              onLoad={(e) => {
+                const w = e.currentTarget.naturalWidth;
+                setCaseStudyBoardNaturalWidth(w);
+                if (w < 720) {
+                  setCaseStudyBoardLowRes(true);
+                }
+              }}
             />
           </div>
+          {caseStudyBoardLowRes && caseStudyBoardNaturalWidth !== null && (
+            <p
+              role="status"
+              className="mx-auto mt-5 max-w-[800px] rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-[15px] leading-[22px] text-amber-950"
+            >
+              This file is only <strong>{caseStudyBoardNaturalWidth}px</strong> wide, so it will look soft when scaled to full width. Export the case study frame from Figma as{" "}
+              <strong>PNG</strong> at full frame width (e.g. <strong>1440–1920px</strong> wide, or <strong>2×</strong>), save as{" "}
+              <code className="rounded bg-white px-1.5 py-0.5 text-[13px]">public/case-studies/al-baraka-case-study.png</code>, then hard-refresh the page.
+            </p>
+          )}
         </div>
       </section>
 

@@ -1,5 +1,4 @@
 import projectAlBarakaEgypt from "../assets/images/project-al-baraka-egypt.png";
-import caseStudyBoardAlBarakaFull from "../assets/images/case-studies/al-baraka-case-study-full.png";
 import projectResq from "../assets/images/project-resq.png";
 import projectTroviny from "../assets/images/project-troviny.png";
 import projectKooora from "../assets/images/project-kooora.png";
@@ -57,7 +56,8 @@ export const PROJECTS: Project[] = [
     tags: ["Product Design", "UX Research", "Fintech"],
     thumbnail: projectAlBarakaEgypt,
     thumbnailFit: "cover",
-    caseStudyBoard: caseStudyBoardAlBarakaFull,
+    /** Served from /public — replace file on disk for a sharp export without rebuilding imports. */
+    caseStudyBoard: `${import.meta.env.BASE_URL}case-studies/al-baraka-case-study.png`,
     role: "Lead UX/UI Designer",
     duration: "4 months",
     overview:
