@@ -32,10 +32,6 @@ export interface Project {
   thumbnailFit?: "contain" | "cover";
   /** Full vertical case study board image (Figma / presentation export) */
   caseStudyBoard: string;
-  /** Optional hero image above the board (e.g. Behance cover replacing a deck photo). */
-  caseStudyLeadImage?: string;
-  /** When true, hide long text sections; title, metadata, optional lead image, and board carry the story. */
-  caseStudyBoardOnly?: boolean;
   role: string;
   duration: string;
   team?: string;
@@ -61,9 +57,7 @@ export const PROJECTS: Project[] = [
     tags: ["Product Design", "UX Research", "Fintech"],
     thumbnail: projectAlBarakaEgypt,
     thumbnailFit: "cover",
-    caseStudyLeadImage: projectAlBarakaEgypt,
     caseStudyBoard: caseStudyBoardAlBarakaFull,
-    caseStudyBoardOnly: true,
     role: "Lead UX/UI Designer",
     duration: "4 months",
     overview:
