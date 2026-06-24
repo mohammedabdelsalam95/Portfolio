@@ -70,7 +70,7 @@ export function ResumePage() {
               </p>
             </div>
             <a
-              href="/cv.pdf"
+              href="/CV.pdf"
               download="Mohammed-Helaly-CV.pdf"
               className="inline-flex items-center justify-center gap-2 self-start rounded-[9.25px] border border-[#e5e7eb] bg-white px-5 py-3 text-sm font-medium text-[#0a0a0a] transition-colors hover:bg-[#f3f4f6]"
             >
